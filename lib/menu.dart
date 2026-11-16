@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myportofolio_mobile/widgets/left_drawer.dart';
+import 'package:myportofolio_mobile/screens/project_form.dart';
 
 class ItemHomepage {
   final String name;
@@ -15,10 +17,10 @@ class MyHomePage extends StatelessWidget {
   final String kelas = "PBP A";
 
   final List<ItemHomepage> items = [
-  ItemHomepage("Lihat Proyek", Icons.folder, Colors.indigo),
-  ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.teal),
-  ItemHomepage("Logout", Icons.logout, Colors.deepOrange),
-];
+    ItemHomepage("Lihat Proyek", Icons.folder, Colors.indigo),
+    ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.teal),
+    ItemHomepage("Logout", Icons.logout, Colors.deepOrange),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,11 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        // iconTheme ditambahkan agar ikon hamburger drawer berwarna putih
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      // Menambahkan LeftDrawer pada halaman utama
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -116,15 +122,26 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: item.color, // Menggunakan warna unik dari item
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
+          // Menampilkan SnackBar interaktif
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
             );
+          
+          // Navigasi ke halaman form jika tombol "Tambah Proyek" ditekan
+          if (item.name == "Tambah Proyek") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProjectFormPage(),
+              ),
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),
