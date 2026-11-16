@@ -43,7 +43,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Nama Proyek
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -67,7 +66,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                 ),
               ),
-              // Deskripsi Proyek
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -92,7 +90,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                 ),
               ),
-              // Kategori Proyek
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButtonFormField<String>(
@@ -116,7 +113,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                 ),
               ),
-              // Teknologi yang Digunakan
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -134,7 +130,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                 ),
               ),
-              // Tautan Proyek
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -152,7 +147,6 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                 ),
               ),
-              // Tombol Simpan
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
