@@ -16,7 +16,94 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-### Tugas 7
+# MyPortfolio Mobile 📱
+
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=flat&logo=dart&logoColor=white)](https://dart.dev)
+[![License: Academic](https://img.shields.io/badge/License-Academic-green.svg)](https://opensource.org/licenses/MIT)
+
+Aplikasi mobile multiplatform berbasis **Flutter** untuk ekosistem portofolio pribadi yang dikembangkan sebagai bagian dari penugasan **Tugas 7 Pemrograman Berbasis Platform (CSGE602022)**, Fakultas Ilmu Komputer, Universitas Indonesia (Semester Gasal 2026/2027).
+
+---
+
+## Identitas 
+- **Nama:** Hasya Azzahra Rangkuti
+- **NPM:** 2506617512
+- **Kelas:** PBP A
+- **Repositori:** [hasyaazzahra256/myportofolio_mobile](https://github.com/hasyaazzahra256/myportofolio_mobile)
+
+---
+
+## Struktur Proyek
+
+Pada tahap Tugas 7, struktur direktori proyek masih terpusat pada direktori `lib/` utama sebelum penerapan *refactoring* lanjutan:
+
+```text
+myportofolio_mobile/
+├── lib/
+│   └── main.dart           # Titik masuk aplikasi, halaman utama (MyHomePage), InfoCard, dan ItemCard
+├── pubspec.yaml            # Manifes proyek dan konfigurasi dependensi Flutter
+└── README.md               # Dokumentasi proyek, AI disclosure, dan pertanyaan reflektif
+```
+
+---
+
+## Instruksi Setup & Menjalankan Aplikasi
+
+### Prasyarat
+- **Flutter SDK** (versi 3.x atau terbaru)
+- **Dart SDK** (termasuk dalam Flutter SDK)
+- **IDE:** Visual Studio Code atau Android Studio dengan ekstensi Flutter & Dart
+- **Target Device:** Chrome (Web), Android Emulator, atau macOS Desktop
+
+### Langkah Instalasi
+1. **Clone repositori ini:**
+   ```bash
+   git clone [https://github.com/hasyaazzahra256/myportofolio_mobile.git](https://github.com/hasyaazzahra256/myportofolio_mobile.git)
+   cd myportofolio_mobile
+   ```
+2. **Unduh semua dependensi proyek:**
+   ```bash
+   flutter pub get
+   ```
+3. **Verifikasi kualitas kode:**
+   ```bash
+   flutter analyze
+   ```
+4. **Jalankan aplikasi:**
+   ```bash
+   flutter run
+   ```
+
+---
+
+## Progres Pengerjaan (Tugas 7)
+- Melakukan inisialisasi proyek Flutter baru bernama `myportofolio_mobile`.
+- Mengimplementasikan identitas pribadi (NPM: `2506617512`, Nama: `Hasya Azzahra Rangkuti`, Kelas: `PBP A`) ke dalam widget `InfoCard`.
+- Menambahkan model `ItemHomepage` dan tombol aksi interaktif (`ItemCard`) dengan variasi warna unik (`Colors.indigo`, `Colors.teal`, `Colors.deepOrange`).
+- Mengonfigurasi umpan balik interaktif berupa `SnackBar` saat tombol menu ditekan oleh pengguna.
+
+---
+
+## AI Disclosure & Analisis Kritis
+
+### Tools yang Digunakan
+- **Google Gemini:** Digunakan sebagai asisten diskusi teknis untuk memahami konsep dasar *widget tree*, struktur layout Flutter, serta penyusunan dokumentasi tugas.
+
+### Strategi Prompting & Bagian yang Dibantu
+1. **Pemahaman Teori Dasar:** Menggunakan *prompt* tanya-jawab interaktif untuk memahami konsep `BuildContext`, perbedaan *StatelessWidget* dan *StatefulWidget*, serta cara kerja *widget tree*.
+2. **Implementasi Kode Layout:** Meminta contoh penerapan widget tata letak dasar seperti `Row`, `Column`, `GridView.count`, dan `Card` untuk menyusun antarmuka halaman utama portofolio.
+3. **Penyusunan Dokumentasi:** Membantu menstrukturkan draf `README.md` dan pertanyaan reflektif sesuai format penugasan.
+
+### Analisis Kritis Keterbatasan AI & Perbaikan Manual
+Dalam proses pengerjaan Tugas 7, terdapat beberapa hal dari respons awal AI yang memerlukan penyesuaian manual:
+1. **Penyesuaian Data Identitas:** Data *placeholder* generik dari contoh AI diganti secara manual dengan data identitas asli mahasiswa (NPM dan nama lengkap).
+2. **Kombinasi Warna & Styling:** Pengaturan warna latar tombol aksi disesuaikan secara manual agar kontras dan selaras dengan tema Material 3 aplikasi.
+3. **Validasi Sintaks:** Memastikan seluruh kode bebas dari peringatan atau *error* dengan menjalankan `flutter analyze` secara berkala.
+
+---
+
+## Pertanyaan Reflektif Tugas 7
 
 #### 1. Jelaskan apa yang dimaksud dengan widget tree pada Flutter dan bagaimana hubungan induk-anak (parent-child) bekerja antar-widget!
 Widget tree adalah struktur hirarki yang merepresentasikan bagaimana widget-widget disusun dan dirender di dalam aplikasi Flutter. Setiap elemen antarmuka (UI) dibentuk sebagai widget. Hubungan induk-anak (parent-child) bekerja dengan cara widget induk (parent) menampung, mengatur tata letak, serta meneruskan data atau properti ke satu atau lebih widget anak (child), membentuk struktur pohon terstruktur dari root ke cabang-cabang bawah.
@@ -44,7 +131,7 @@ Widget MaterialApp berfungsi untuk mengonfigurasi aplikasi agar mendukung standa
 #### 4. Jelaskan perbedaan antara StatelessWidget dan StatefulWidget! Kapan kita sebaiknya memilih StatelessWidget dan kapan harus menggunakan StatefulWidget?
 - **StatelessWidget**: Widget yang sifatnya statis, artinya kondisinya tidak dapat berubah (*immutable*) setelah dirender karena tidak memiliki *state* lokal yang dimutasi.
 - **StatefulWidget**: Widget yang dapat berubah dinamis (*mutable*) karena memiliki objek *state* terpisah yang dapat memperbarui antarmuka ketika terjadi perubahan data (misalnya saat ada interaksi pengguna atau pengambilan data jaringan).
-- **Pemilihan**: Pilih *StatelessWidget* untuk tampilan statis yang tidak memerlukan perubahan data (seperti halaman menu utama portofolio ini), dan pilih *StatefulWidget* jika halaman membutuhkan pembaruan dinamis secara berkala.
+- **Pemilihan**: Pilih *StatelessWidget* untuk tampilan statis yang tidak memerlukan perubahan data (seperti halaman menu utama portofolio pada Tugas 7 ini), dan pilih *StatefulWidget* jika halaman membutuhkan pembaruan dinamis secara berkala.
 
 #### 5. Apa itu BuildContext dan mengapa penting di Flutter? Bagaimana penggunaannya di dalam metode build?
 `BuildContext` adalah sebuah objek yang merepresentasikan lokasi sebuah widget di dalam widget tree. Objek ini sangat penting karena memungkinkan widget mengakses informasi tetangga di atasnya, seperti mewarisi tema (`Theme.of(context)`) atau menampilkan notifikasi (`ScaffoldMessenger.of(context)`). Di dalam metode build, `BuildContext context` dilewatkan sebagai parameter wajib untuk merender turunan widget berdasarkan konteks posisinya.
