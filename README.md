@@ -16,13 +16,13 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-# MyPortfolio Mobile 📱
+# MyPortfolio Mobile 
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=flat&logo=dart&logoColor=white)](https://dart.dev)
 [![License: Academic](https://img.shields.io/badge/License-Academic-green.svg)](https://opensource.org/licenses/MIT)
 
-Aplikasi mobile multiplatform berbasis **Flutter** untuk ekosistem portofolio pribadi yang dikembangkan sebagai bagian dari penugasan **Tugas 7 Pemrograman Berbasis Platform (CSGE602022)**, Fakultas Ilmu Komputer, Universitas Indonesia (Semester Gasal 2026/2027).
+Aplikasi mobile multiplatform berbasis **Flutter** untuk ekosistem portofolio pribadi yang dikembangkan sebagai bagian dari mata kuliah **Pemrograman Berbasis Platform (CSGE602022)**, Fakultas Ilmu Komputer, Universitas Indonesia (Semester Gasal 2026/2027).
 
 ---
 
@@ -140,3 +140,75 @@ Widget MaterialApp berfungsi untuk mengonfigurasi aplikasi agar mendukung standa
 - **Hot Reload**: Memasukkan file kode yang telah diubah ke dalam *Dart Virtual Machine* (VM) yang sedang berjalan tanpa kehilangan status aplikasi saat ini (sangat cepat).
 - **Hot Restart**: Memuat ulang seluruh aplikasi dari awal dan mereset *state* aplikasi kembali ke kondisi semula.
 - **Kapan butuh Hot Restart/Full Restart**: Kita tidak bisa mengandalkan *hot reload* ketika mengubah struktur *state* global, mengubah fungsi `main()`, mengubah inisialisasi aplikasi, atau memodifikasi aset statis/konfigurasi *native* (seperti `pubspec.yaml`).
+
+---
+
+## Struktur Proyek Terbaru (Tugas 8)
+
+Setelah penerapan *refactoring* modular dari Tutorial 09 dan penambahan fitur formulir pengalaman pada Tugas 8, struktur direktori proyek saat ini terbagi menjadi `lib/screens/` dan `lib/widgets/`:
+
+```text
+myportofolio_mobile/
+├── lib/
+│   ├── screens/
+│   │   ├── menu.dart             # Halaman utama portofolio (MyHomePage), InfoCard, & kartu aksi
+│   │   ├── project_form.dart     # Halaman formulir tambah proyek (Tutorial 09)
+│   │   └── experience_form.dart  # Halaman formulir tambah pengalaman baru (Tugas 8)
+│   ├── widgets/
+│   │   ├── left_drawer.dart      # Menu navigasi samping (Home, Add Project, Add Experience)
+│   │   └── project_card.dart     # Model ItemHomepage & komponen kartu aksi ItemCard
+│   └── main.dart                 # Entry point aplikasi & konfigurasi tema Material 3
+├── pubspec.yaml                  # Manifes proyek dan konfigurasi dependensi Flutter
+└── README.md                     # Dokumentasi proyek, progres tugas, AI disclosure, & refleksi
+```
+
+---
+
+## Progres Pengerjaan (Tugas 8)
+- Membuat halaman formulir baru **`ExperienceFormPage`** (`lib/screens/experience_form.dart`) menggunakan `StatefulWidget`, `Form`, dan `GlobalKey<FormState>` dengan lima kolom input (*Posisi/Peran*, *Organisasi/Instansi*, *Kategori Pengalaman*, *Tahun Mulai*, dan *Tautan Dokumentasi*).
+- Menerapkan validasi input untuk menolak isian wajib yang kosong atau hanya berisi spasi, memeriksa panjang karakter minimum, memvalidasi rentang tahun mulai, serta memverifikasi format URL opsional (`http://` atau `https://`).
+- Menampilkan ringkasan data pengalaman dalam **`AlertDialog`** melalui `showDialog()` setelah seluruh validasi lolos saat tombol **Simpan** ditekan.
+- Menambahkan opsi navigasi **Add Experience** pada `LeftDrawer` (`lib/widgets/left_drawer.dart`) dan kartu aksi **Tambah Pengalaman** pada halaman utama (`lib/screens/menu.dart` & `lib/widgets/project_card.dart`) menggunakan `Navigator.push()`.
+- Menyesuaikan tata letak halaman utama menggunakan `SingleChildScrollView` dan `childAspectRatio` pada `GridView.count` agar responsif serta bebas dari *overflow* pada layar ponsel maupun Chrome.
+
+---
+
+## AI Disclosure & Analisis Kritis (Tugas 8)
+
+### Tools yang Digunakan
+- **Google Gemini:** Digunakan untuk diskusi teknis terkait desain validasi formulir, navigasi antar-layar, penyelesaian peringatan `flutter analyze`, dan penyesuaian *layout*.
+
+### Strategi Prompting & Bagian yang Dibantu
+1. **Perancangan Formulir & Validasi:** Meminta referensi struktur `StatefulWidget` untuk `ExperienceFormPage` beserta aturan `validator` pada `TextFormField` dan `DropdownButtonFormField`.
+2. **Integrasi Navigasi & Drawer:** Mendiskusikan penggunaan `Navigator.push()` pada kartu aksi serta konsistensi `LeftDrawer` di seluruh halaman.
+3. **Debugging Peringatan & Layout:** Meminta analisis terhadap peringatan `deprecated_member_use` serta masalah *bottom overflow* saat aplikasi diuji di Chrome.
+
+### Analisis Kritis Keterbatasan AI & Perbaikan Manual
+1. **Penggantian Properti Deprecated:** Saran awal AI menggunakan properti `value` pada `DropdownButtonFormField` di `experience_form.dart` yang memunculkan peringatan `deprecated_member_use` di SDK Flutter lokal. Diperbaiki secara manual menjadi `initialValue` agar `flutter analyze` bersih (`No issues found!`).
+2. **Perbaikan Overflow & Proporsi Grid di Chrome:** Tata letak `Column` statis dan rasio kartu *default* pada `GridView.count` menyebabkan *bottom overflow* saat dijalankan di Chrome. Dilakukan perbaikan manual dengan membungkus `body` ke dalam `SingleChildScrollView` serta menyesuaikan `childAspectRatio` agar seluruh kartu dapat dijangkau dengan nyaman.
+3. **Penyesuaian Model Data & Validasi:** Aturan validasi tahun dan URL opsional disesuaikan secara manual agar sesuai dengan karakteristik data pengalaman pada portofolio pribadi.
+
+---
+
+### Pertanyaan Reflektif Tugas 8
+
+#### 1. Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.
+- **`Navigator.push()`**: Menambahkan rute/halaman baru ke puncak tumpukan navigasi (*navigation stack*), sehingga halaman sebelumnya tetap tersimpan di bawahnya dan pengguna bisa kembali menggunakan tombol *back* bawaan perangkat. Metode ini digunakan untuk membuka formulir (`ProjectFormPage` maupun `ExperienceFormPage`) dari kartu aksi dan opsi formulir di *drawer*.
+- **`Navigator.pushReplacement()`**: Mengganti rute aktif yang sedang berada di puncak *stack* dengan rute baru, sehingga halaman lama dihapus dari riwayat tumpukan.
+- **`Navigator.pop()`**: Menghapus rute teratas dari *navigation stack* dan mengembalikan tampilan ke rute sebelumnya (juga digunakan untuk menutup `AlertDialog` saat tombol **OK** ditekan).
+- **Opsi Home di drawer**: Pada `LeftDrawer`, memilih *ListTile* **Home** menjalankan `Navigator.pushReplacement()` menuju `MyHomePage()`, sehingga pengguna langsung diarahkan kembali ke halaman utama tanpa menumpuk riwayat navigasi berulang.
+
+#### 2. Bagaimana susunan Scaffold, AppBar, dan Drawer membantu menjaga struktur halaman tetap konsisten? Berikan satu contoh penggunaan warna tema portofolio di lebih dari satu halaman.
+- `Scaffold` menyediakan kerangka dasar standar Material Design pada setiap halaman, `AppBar` menempatkan judul layar dan tombol pembuka *drawer* di bagian atas secara seragam, sedangkan `Drawer` (`LeftDrawer`) menyediakan menu navigasi samping yang identik di setiap halaman.
+- **Contoh penggunaan warna tema**: Warna utama tema (`Theme.of(context).colorScheme.primary` berbasis *seed color* `Colors.indigo`) digunakan secara konsisten pada `AppBar` di halaman utama (`lib/screens/menu.dart`), `AppBar` serta tombol **Simpan** di halaman formulir pengalaman (`lib/screens/experience_form.dart`), dan bagian `DrawerHeader` pada `lib/widgets/left_drawer.dart`.
+
+#### 3. Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.
+- Susunan `Scaffold` → `SafeArea` → `Form` → `SingleChildScrollView` → `Column` dipilih agar seluruh kolom input tersusun rapi secara vertikal, aman dari area sistem perangkat (*notch*/status bar) berkat `SafeArea`, dan terkelola validasinya dalam satu widget `Form`.
+- **Peran widget penggulir (`SingleChildScrollView`)**: Memungkinkan halaman formulir digulir secara vertikal saat ruang tinggi layar terbatas (seperti di layar ponsel sempit atau ketika *soft keyboard* terbuka), sehingga kolom terbawah dan tombol **Simpan** tetap bisa diakses tanpa terpotong.
+- **Peran widget pengatur jarak (`SizedBox` dan `padding`)**: Memberikan spasi yang rapi antar-kolom input (`SizedBox(height: 14.0)`), jarak antar-baris ringkasan di `AlertDialog`, serta jarak tepi layar (`EdgeInsets.all(16.0)`) agar elemen tidak saling menempel.
+
+#### 4. Apa peran GlobalKey<FormState>, validator, dan validate() saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.
+- **`GlobalKey<FormState>`**: Kunci unik yang menghubungkan widget `Form` dengan objek `FormState`-nya sehingga status validasi dan *reset* formulir dapat diakses dari luar *child widget*-nya (seperti saat tombol **Simpan** ditekan).
+- **`validator`**: Fungsi pemeriksaan pada tiap kolom (`TextFormField`) yang mengecek apakah input memenuhi aturan validasi (mengembalikan `String` pesan error jika salah, atau `null` jika valid).
+- **`validate()`**: Metode pada `_formKey.currentState` yang menjalankan seluruh `validator` di dalam `Form` sekaligus, menampilkan pesan error di bawah kolom terkait jika gagal, dan mengembalikan `true` hanya jika semua kolom valid.
+- **Contoh nilai yang ditolak & alasan jenis input/papan ketik saja belum cukup**: Input yang hanya berisi spasi kosong seperti `"   "` pada kolom **Posisi / Peran** atau teks `"contoh-tanpa-http"` pada kolom **Tautan Dokumentasi** akan ditolak oleh `validator`. Pemilihan jenis papan ketik (seperti `TextInputType.number` atau `TextInputType.url`) hanya menyesuaikan tata letak tombol keyboard demi kemudahan mengetik, tetapi tidak dapat mencegah pengguna membiarkan kolom kosong, mengetik spasi saja, melakukan *copy-paste* teks sembarang, atau memasukkan tahun di luar rentang yang wajar.
