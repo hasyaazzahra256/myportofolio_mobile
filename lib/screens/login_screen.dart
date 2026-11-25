@@ -29,9 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isSubmitting = true);
     try {
       await context.read<AuthState>().login(
-            _usernameController.text.trim(),
-            _passwordController.text,
-          );
+        _usernameController.text.trim(),
+        _passwordController.text,
+      );
       if (!mounted) return;
       Navigator.pop(context, true);
     } on ApiException catch (e) {
@@ -41,9 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Terjadi kesalahan: $e')),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Terjadi kesalahan: $e')));
     } finally {
       if (mounted) {
         setState(() => _isSubmitting = false);

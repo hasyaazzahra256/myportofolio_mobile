@@ -65,9 +65,10 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
 
     setState(() => _isSubmitting = true);
     try {
-      final created = await context
-          .read<ApiClient>()
-          .createProject(project, token: token);
+      final created = await context.read<ApiClient>().createProject(
+        project,
+        token: token,
+      );
       if (!mounted) return;
 
       await showDialog<void>(
@@ -131,9 +132,8 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
       }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Terjadi kesalahan: $e')),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Terjadi kesalahan: $e')));
     } finally {
       if (mounted) {
         setState(() => _isSubmitting = false);
@@ -219,10 +219,12 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   ),
                   initialValue: _category,
                   items: _categories
-                      .map((category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(category),
-                          ))
+                      .map(
+                        (category) => DropdownMenuItem(
+                          value: category,
+                          child: Text(category),
+                        ),
+                      )
                       .toList(),
                   onChanged: (String? newValue) {
                     setState(() {
@@ -314,8 +316,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all(Colors.indigo),
+                      backgroundColor: WidgetStateProperty.all(Colors.indigo),
                     ),
                     onPressed: _isSubmitting ? null : _handleSave,
                     child: _isSubmitting
